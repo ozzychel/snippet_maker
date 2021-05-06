@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { monokaiSublime } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import jsbeautifier from 'js-beautify';
@@ -53,24 +52,55 @@ class App extends React.Component<Props, State> {
   render () {
 
     return (
+      <div className="container-fluid text-center App">
 
-      <div>
-        <div id="top">
-        <form>
-          <label htmlFor="userInput">Type/Paste your code here:</label><br/>
-          <textarea id="input-area" onChange={this.handleOnChange} value={this.state.userInput}/><br/>
-          <button id="btn-submit" test-id="btn-submit" type="submit" onClick={this.handleButtonClick}>CREATE</button>
-        </form>
+        <div className="inner-wrapper container-fluid">
+          <div className="container-fluid title-wrapper">
+            <div className="title">TITLE</div>
+          </div>
+
+          <div className="creator-wrapper row">
+
+            <div className="textarea-wrapper col-8">
+              <textarea className="input-area" onChange={this.handleOnChange} value={this.state.userInput}/>
+            </div>
+
+            <div className="options-wrapper col-4">
+              <div className="options-inner">
+                <div className="dropdown-cont">choose lang</div>
+                <div className="dropdown-cont">choose style</div>
+                <div>add numbers/wrap long lines</div>
+                <div className="button-cont">
+                  <button
+                  id="btn-submit"
+                  test-id="btn-submit"
+                  type="submit"
+                  onClick={this.handleButtonClick}
+                >CREATE</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
         </div>
 
-        <div id="bottom">
-          <ul id="list"/>
+        <div className="snippets-wrapper container-fluid">
+          <div className="inner-wrapper container-fluid">
+
+            <div className="snipets-title container-fluid">snip title</div>
+            <div className="list-wrapper">
+              <ul className="snippet-list">
+                {this.state.snippets}
+              </ul>
+            </div>
+          </div>
         </div>
-        <div>
-          {this.state.snippets}
-        </div>
+
+        <div className="footer-wrapper container-fluid text-center fixed-bottom">@Copyright AP, 2021</div>
+
+
       </div>
-
     )
   }
 }
