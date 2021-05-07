@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { monokaiSublime } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import * as style from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import jsbeautifier from 'js-beautify';
 
 type Props = {}
@@ -9,14 +9,25 @@ type Props = {}
 type State = {
   counter: number,
   userInput: string,
-  snippets: JSX.Element[]
+  snippets: snipObj[],
+  outStyle: string,
 };
+
+type snipObj = {
+  txt: string,
+  style: string,
+  lineNums: boolean,
+  wrapLong: boolean
+}
 
 class App extends React.Component<Props, State> {
   state = {
     counter: 0,
     userInput: "",
-    snippets: []
+    snippets: [],
+    outStyle: "monokaiSublime",
+    lineNums: true,
+    wrapLong: true
   };
 
   handleOnChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
@@ -31,25 +42,31 @@ class App extends React.Component<Props, State> {
     }
   }
 
-  addSnippet = (txt: string):void => {
+  addSnippet = (txt: string) => {
     let res = jsbeautifier(txt);
-    console.log(res);
-    this.setState({
-      snippets: [...this.state.snippets,
-        <li className="snippet" key={this.state.counter}>
-          <SyntaxHighlighter
-            showLineNumbers
-            language="javascript"
-            style={monokaiSublime}
-          >
-            {res}
-          </SyntaxHighlighter>
-        </li>],
-      counter: this.state.counter + 1
-    })
+    this.setState({ snippets: [...this.state.snippets,
+      {txt: res, style: this.state.outStyle, lineNums: this.state.lineNums, wrapLong: this.state.wrapLong}
+    ]});
   }
 
   render () {
+    const styleNames: string[] = Object.keys(style);
+
+    const options: JSX.Element[] = styleNames.map((el, i) => (
+      <option key={i} value={el}>{el}</option>
+    ))
+
+    const readySnippets: JSX.Element[] = this.state.snippets.map((el, i) => (
+      <li className="snippet" key={i}>
+        <SyntaxHighlighter
+          showLineNumbers
+          language="javascript"
+          style={style[el['style']]}
+        >
+          {el['txt']}
+        </SyntaxHighlighter>
+      </li>
+    ));
 
     return (
       <div className="container-fluid text-center App">
@@ -67,19 +84,29 @@ class App extends React.Component<Props, State> {
 
             <div className="options-wrapper col-4">
               <div className="options-inner">
-                <div className="dropdown-cont">choose lang</div>
-                <div className="dropdown-cont">choose style</div>
+                <div>
+
+                  <select
+                    value={this.state.outStyle}
+                    onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
+                      this.setState({ outStyle: e.currentTarget.value})
+                    }}
+                  >
+                    {options}
+                  </select>
+
+                </div>
                 <div>add numbers/wrap long lines</div>
                 <div className="button-cont">
                   <button
-                  id="btn-submit"
-                  test-id="btn-submit"
-                  type="submit"
-                  onClick={this.handleButtonClick}
-                >CREATE</button>
+                    id="btn-submit"
+                    test-id="btn-submit"
+                    type="submit"
+                    onClick={this.handleButtonClick}
+                  >CREATE</button>
                 </div>
-              </div>
 
+              </div>
             </div>
 
           </div>
@@ -91,7 +118,7 @@ class App extends React.Component<Props, State> {
             <div className="snipets-title container-fluid">snip title</div>
             <div className="list-wrapper">
               <ul className="snippet-list">
-                {this.state.snippets}
+                {readySnippets}
               </ul>
             </div>
           </div>

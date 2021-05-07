@@ -1,7 +1,16 @@
 
+ul {
+  list-style-type: none;
+}
+
 .App {
   text-align: center;
 }
+
+.dropdown-menu {
+  overflow-y:auto;
+  max-height:80vh
+ }
 
 .snippet {
   text-align: left;
