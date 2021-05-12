@@ -4,19 +4,18 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import * as style from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import jsbeautifier from 'js-beautify';
 
-const getLangs = (obj: any) => {
-  return obj["supportedLanguages"];
-}
+const getLangs = (obj: any) => obj["supportedLanguages"];
 const supportedLanguages = getLangs(SyntaxHighlighter);
 
 type Props = {}
-
 type State = {
   counter: number,
   userInput: string,
   snippets: snipObj[],
   outStyle: string,
-  outLang: string
+  outLang: string,
+  lineNums: boolean,
+  wrapLines: boolean
 };
 
 type snipObj = {
@@ -58,24 +57,21 @@ class App extends React.Component<Props, State> {
   }
 
   render () {
-    const styleNames: string[] = Object.keys(style);
 
+    const styleNames: string[] = Object.keys(style);
     const styleOptions: JSX.Element[] = styleNames.map((el:string, i:number) => (
       <option key={i} value={el}>{el}</option>
     ))
-
     const langOptions: JSX.Element[] = supportedLanguages.map((el:string, i:number) => (
       <option key={i} value={el}>{el}</option>
     ))
-
-
     const readySnippets: JSX.Element[] = this.state.snippets.map((el, i:number) => (
       <li className="snippet" key={i}>
         <SyntaxHighlighter
           style={style[el['style']]}
           language={el['lang']}
           showLineNumbers={el['lineNums']}
-          wrapLines
+          wrapLongLines={el['wrapLines']}
         >
           {el['txt']}
         </SyntaxHighlighter>
@@ -83,23 +79,22 @@ class App extends React.Component<Props, State> {
     ));
 
     return (
-      <div className="container-fluid text-center App">
+      <div className="text-center App">
 
-        <div className="inner-wrapper container-fluid">
+        <div className="container-fluid inner-wrapper-top bg-darker">
+
           <div className="container-fluid title-wrapper">
-            <div className="title">TITLE</div>
+            <div className="title">Snippet Maker</div>
           </div>
 
-          <div className="creator-wrapper row">
-
-            <div className="textarea-wrapper col-8">
-              <textarea className="input-area" onChange={this.handleOnChange} value={this.state.userInput}/>
-            </div>
-
-            <div className="options-wrapper col-4">
-              <div className="options-inner">
-
-                <div>
+          <div className="container-fluid p-2 workzone">
+            <div className="row" style={{border:"1px solid red"}}>
+              <div className="col-9 textarea-wrapper">
+                <textarea className="input-area" onChange={this.handleOnChange} value={this.state.userInput}/>
+              </div>
+              <div className="col-3 options-wrapper">
+                <div className="options-inner">
+                <div className="options-line">
                   <select
                     value={this.state.outStyle}
                     onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
@@ -110,7 +105,7 @@ class App extends React.Component<Props, State> {
                   </select>
                 </div>
 
-                <div>
+                <div className="options-line mt-2">
                   <select
                     value={this.state.outLang}
                     onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
@@ -121,41 +116,58 @@ class App extends React.Component<Props, State> {
                   </select>
                 </div>
 
+                <div className="options-line mt-2">
+                  <label>
+                    <input
+                      className="input-checkbox"
+                      type="checkbox"
+                      checked={this.state.lineNums}
+                      onChange={() => this.setState({ lineNums: !this.state.lineNums })}>
+                    </input>
+                    Show line numbers
+                  </label>
+                </div>
 
+                <div className="options-line mt-2">
+                  <label>
+                    <input
+                      className="input-checkbox"
+                      type="checkbox"
+                      checked={this.state.wrapLines}
+                      onChange={() => this.setState({ wrapLines: !this.state.wrapLines })}>
+                    </input>
+                    Wrap long lines
+                  </label>
+                </div>
 
-                <div>add numbers/wrap long lines</div>
-
-                <div className="button-cont">
+                <div className="options-line py-2 mt-2">
                   <button
-                    id="btn-submit"
+                    className="btn-submit"
                     test-id="btn-submit"
                     type="submit"
                     onClick={this.handleButtonClick}
                   >CREATE</button>
                 </div>
-
+                </div>
               </div>
-            </div>
 
-          </div>
-        </div>
-
-        <div className="snippets-wrapper container-fluid">
-          <div className="inner-wrapper container-fluid">
-
-            <div className="snipets-title container-fluid">snip title</div>
-            <div className="list-wrapper">
-              <ul className="snippet-list">
-                {readySnippets}
-              </ul>
             </div>
           </div>
         </div>
 
-        <div className="footer-wrapper container-fluid text-center fixed-bottom">@Copyright AP, 2021</div>
+        <div className="container-fluid my-2 inner-wrapper-middle bg-lighter">
+          <div className="container-fluid title-wrapper">
+            <div className="title">Ready Snippets:</div>
+          </div>
+          <div className="ready-snippets-wrapper">
+            {readySnippets}
+          </div>
+        </div>
 
+        <div className="container-fluid inner-wrapper-bottom bg-darker">@Copyright AP, 2021</div>
 
       </div>
+
     )
   }
 }

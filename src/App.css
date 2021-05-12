@@ -1,65 +1,201 @@
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-grey: #ccc;
+  --color-accent: #f9004d;
+  --color-accent2: #fc004d;
+  --color-elegant-black: #191919;
+  --color-grey-text: #C6C9D8BF;
+  --color-darkgrey: #4B515D;
+
+  --color-text-title: #7645d9;
+  --color-text-dark: #280D5F;
+  --color-text-regular: #7A6EAA;
+  --bgcolor-darker: #faf9fa;
+  --bgcolor-lighter: #fff;
+  --bgcolor-accent: #9b9fd6;
+  --bgcolor-textarea: #EEEAF4;
+  --bgcolor-gradient: linear-gradient(139.73deg, rgb(229, 253, 255) 0%, rgb(243, 239, 255) 100%)
+}
 
 ul {
   list-style-type: none;
 }
 
+textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+  line-height: 46px;
+  transition: all .3s ease;
+  min-height: 60px;
+  font-size: 2.5vh;
+  letter-spacing: .1px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  outline:none;
+  background-color: var(--bgcolor-textarea);
+  border: 2px solid var(--color-text-dark);
+  color:var(--color-text-dark);
+}
+
 .App {
   text-align: center;
+  background-color: var(--color-white);
+  max-height: 95vh;
+}
+
+.bg-darker {
+  background-color: var(--bgcolor-darker);
+}
+
+.bg-lighter {
+  background-color: var(--bgcolor-lighter);
+}
+
+.btn-submit {
+  align-items: center;
+  border: 0px;
+  border-radius: 16px;
+  box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  opacity: 1;
+  outline: 0px;
+  transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+  height: 48px;
+  padding: 0px 24px;
+  background-color: rgb(31, 199, 212);
+  color: white;
+  width: 100%;
+}
+
+.btn-submit:hover {
+  opacity: 0.7
 }
 
 .dropdown-menu {
-  overflow-y:auto;
-  max-height:80vh
- }
+  overflow-y: auto;
+  max-height: 80vh
+}
+
+.input-checkbox {
+   margin-right: 10px;
+}
+
+.inner-wrapper-top {
+  padding: 20px 30px;
+  border: 1px solid black;
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow: auto;
+  /* background: var(--bgcolor-gradient); */
+}
+
+.inner-wrapper-middle {
+  padding: 20px 30px;
+  border: 1px solid black;
+  min-height: 40vh;
+  max-height: 40vh;
+  overflow: auto;
+  /* background: var(--bgcolor-gradient); */
+}
+
+.inner-wrapper-bottom {
+  /* padding: 40px 30px; */
+  border: 1px solid black;
+  height: 5vh;
+  /* background: var(--bgcolor-gradient); */
+}
+
+
+.options-wrapper {
+   border: 1px solid green;
+}
+
+.options-inner {
+   border: 1px solid pink;
+   margin: 5px;
+}
+
+.options-line {
+   /* border: 1px solid purple; */
+}
+
+.options-line select {
+  width: 100%;
+  min-height: 4vh;
+  text-align-last:center;
+  font-size: 2.5vh;
+  font-weight: 500;
+  background-color: var(--bgcolor-textarea);
+  color: var(--color-text-dark);
+  border-radius: 5px;
+}
+
+.options-line label {
+   font-family: 'Poppins sans-serif';
+   font-size: 2.5vh;
+   display:flex;
+   justify-content: left;
+   align-items: center;
+   padding-left: 25%;
+   color: var(--color-text-dark);
+   font-weight: 600;
+}
+
+.ready-snippets-wrapper {
+  border: 3px solid green;
+  min-height: 40vh;
+  max-height: 40vh;
+  overflow: auto;
+}
 
 .snippet {
   text-align: left;
 }
 
 .title-wrapper {
-
+  /* border: 1px solid palevioletred; */
+  padding:0;
+  /* background: var(--bgcolor-gradient) */
 }
 
 .title {
-
-}
-
-.inner-wrapper {
-
-}
-
-.creator-wrapper {
-
+  font-size: 34px;
+  font-weight: 700;
+  font-family: 'Kanit', sans-serif;
+  color: var(--color-text-title);
 }
 
 .textarea-wrapper {
-
+  border: 1px solid orange;
+  padding: 5px;
 }
 
-.input-area {
-
+.workzone {
+  border: 1px solid blue;
 }
 
-.options-wrapper {
-
-}
-
-.options-inner {
-
-}
-
-.dropdown-cont {
-
+.workzone-inner-wrapper {
+  border: 1px dotted lightblue;
 }
 
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -68,9 +204,9 @@ ul {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
-.App-link {
+/* .App-link {
   color: #61dafb;
 }
 
@@ -81,4 +217,4 @@ ul {
   to {
     transform: rotate(360deg);
   }
-}
+} */
