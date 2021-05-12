@@ -4,6 +4,11 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import * as style from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import jsbeautifier from 'js-beautify';
 
+const getLangs = (obj: any) => {
+  return obj["supportedLanguages"];
+}
+const supportedLanguages = getLangs(SyntaxHighlighter);
+
 type Props = {}
 
 type State = {
@@ -11,13 +16,15 @@ type State = {
   userInput: string,
   snippets: snipObj[],
   outStyle: string,
+  outLang: string
 };
 
 type snipObj = {
   txt: string,
   style: string,
+  lang: string,
   lineNums: boolean,
-  wrapLong: boolean
+  wrapLines: boolean
 }
 
 class App extends React.Component<Props, State> {
@@ -26,8 +33,9 @@ class App extends React.Component<Props, State> {
     userInput: "",
     snippets: [],
     outStyle: "monokaiSublime",
+    outLang: "javascript",
     lineNums: true,
-    wrapLong: true
+    wrapLines: true
   };
 
   handleOnChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
@@ -45,23 +53,29 @@ class App extends React.Component<Props, State> {
   addSnippet = (txt: string) => {
     let res = jsbeautifier(txt);
     this.setState({ snippets: [...this.state.snippets,
-      {txt: res, style: this.state.outStyle, lineNums: this.state.lineNums, wrapLong: this.state.wrapLong}
+      {txt: res, style: this.state.outStyle, lang: this.state.outLang, lineNums: this.state.lineNums, wrapLines: this.state.wrapLines}
     ]});
   }
 
   render () {
     const styleNames: string[] = Object.keys(style);
 
-    const options: JSX.Element[] = styleNames.map((el, i) => (
+    const styleOptions: JSX.Element[] = styleNames.map((el:string, i:number) => (
       <option key={i} value={el}>{el}</option>
     ))
 
-    const readySnippets: JSX.Element[] = this.state.snippets.map((el, i) => (
+    const langOptions: JSX.Element[] = supportedLanguages.map((el:string, i:number) => (
+      <option key={i} value={el}>{el}</option>
+    ))
+
+
+    const readySnippets: JSX.Element[] = this.state.snippets.map((el, i:number) => (
       <li className="snippet" key={i}>
         <SyntaxHighlighter
-          showLineNumbers
-          language="javascript"
           style={style[el['style']]}
+          language={el['lang']}
+          showLineNumbers={el['lineNums']}
+          wrapLines
         >
           {el['txt']}
         </SyntaxHighlighter>
@@ -84,19 +98,33 @@ class App extends React.Component<Props, State> {
 
             <div className="options-wrapper col-4">
               <div className="options-inner">
-                <div>
 
+                <div>
                   <select
                     value={this.state.outStyle}
                     onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
                       this.setState({ outStyle: e.currentTarget.value})
                     }}
                   >
-                    {options}
+                    {styleOptions}
                   </select>
-
                 </div>
+
+                <div>
+                  <select
+                    value={this.state.outLang}
+                    onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
+                      this.setState({ outLang: e.currentTarget.value})
+                    }}
+                  >
+                    {langOptions}
+                  </select>
+                </div>
+
+
+
                 <div>add numbers/wrap long lines</div>
+
                 <div className="button-cont">
                   <button
                     id="btn-submit"
