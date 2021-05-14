@@ -65,8 +65,21 @@ class App extends React.Component<Props, State> {
     const langOptions: JSX.Element[] = supportedLanguages.map((el:string, i:number) => (
       <option key={i} value={el}>{el}</option>
     ))
+    // const readySnippets: JSX.Element[] = this.state.snippets.map((el, i:number) => (
+    //   <li className="snippet" key={i}>
+    //     <SyntaxHighlighter
+    //       style={style[el['style']]}
+    //       language={el['lang']}
+    //       showLineNumbers={el['lineNums']}
+    //       wrapLongLines={el['wrapLines']}
+    //     >
+    //       {el['txt']}
+    //     </SyntaxHighlighter>
+    //   </li>
+    // ));
+
     const readySnippets: JSX.Element[] = this.state.snippets.map((el, i:number) => (
-      <li className="snippet" key={i}>
+      <div key={i}>
         <SyntaxHighlighter
           style={style[el['style']]}
           language={el['lang']}
@@ -75,7 +88,7 @@ class App extends React.Component<Props, State> {
         >
           {el['txt']}
         </SyntaxHighlighter>
-      </li>
+      </div>
     ));
 
     return (
@@ -84,13 +97,13 @@ class App extends React.Component<Props, State> {
         <div className="container-fluid inner-wrapper-top bg-darker">
 
           <div className="container-fluid title-wrapper">
-            <div className="title">Snippet Maker</div>
+            <div className="title">SnippetForge</div>
           </div>
 
           <div className="container-fluid p-2 workzone">
-            <div className="row" style={{border:"1px solid red"}}>
+            <div className="row">
               <div className="col-9 textarea-wrapper">
-                <textarea className="input-area" onChange={this.handleOnChange} value={this.state.userInput}/>
+                <textarea className="textarea-input" onChange={this.handleOnChange} value={this.state.userInput}/>
               </div>
               <div className="col-3 options-wrapper">
                 <div className="options-inner">
@@ -117,7 +130,7 @@ class App extends React.Component<Props, State> {
                 </div>
 
                 <div className="options-line mt-2">
-                  <label>
+                  <label className={this.state.lineNums ? "label-bright" : "label-bright pale"}>
                     <input
                       className="input-checkbox"
                       type="checkbox"
@@ -129,7 +142,7 @@ class App extends React.Component<Props, State> {
                 </div>
 
                 <div className="options-line mt-2">
-                  <label>
+                  <label className={this.state.wrapLines ? "label-bright" : "label-bright pale"}>
                     <input
                       className="input-checkbox"
                       type="checkbox"
@@ -157,14 +170,23 @@ class App extends React.Component<Props, State> {
 
         <div className="container-fluid my-2 inner-wrapper-middle bg-lighter">
           <div className="container-fluid title-wrapper">
-            <div className="title">Ready Snippets:</div>
+            {/* <div className="title">Ready Snippets:</div> */}
+            <h3>Your snippets:</h3>
           </div>
           <div className="ready-snippets-wrapper">
-            {readySnippets}
+            {/* <ul>
+              {readySnippets}
+            </ul> */}
+            <div>
+              {readySnippets}
+            </div>
+
           </div>
         </div>
 
-        <div className="container-fluid inner-wrapper-bottom bg-darker">@Copyright AP, 2021</div>
+        <div className="container-fluid inner-wrapper-bottom bg-darker">
+          <span className="footer-span">Copyright © 2021 Andrey Petunin. All Rights Reserved.</span>
+        </div>
 
       </div>
 

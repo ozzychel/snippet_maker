@@ -11,6 +11,7 @@
   --color-text-title: #7645d9;
   --color-text-dark: #280D5F;
   --color-text-regular: #7A6EAA;
+  --color-text-pale: #BDC2C4;
   --bgcolor-darker: #faf9fa;
   --bgcolor-lighter: #fff;
   --bgcolor-accent: #9b9fd6;
@@ -18,32 +19,27 @@
   --bgcolor-gradient: linear-gradient(139.73deg, rgb(229, 253, 255) 0%, rgb(243, 239, 255) 100%)
 }
 
-ul {
-  list-style-type: none;
+h3 {
+  color: var(--color-text-title)
 }
 
-textarea {
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 20px;
-  line-height: 46px;
-  transition: all .3s ease;
-  min-height: 60px;
-  font-size: 2.5vh;
-  letter-spacing: .1px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  outline:none;
-  background-color: var(--bgcolor-textarea);
-  border: 2px solid var(--color-text-dark);
-  color:var(--color-text-dark);
+ul {
+  list-style-type: none;
+  display:flex;
+  flex-direction: column;
+  padding:0;
 }
+
+.snippet {
+  text-align: left;
+}
+
 
 .App {
   text-align: center;
   background-color: var(--color-white);
   max-height: 95vh;
+  font-family: 'Kanit', sans-serif;
 }
 
 .bg-darker {
@@ -86,24 +82,35 @@ textarea {
   max-height: 80vh
 }
 
+.footer-span {
+  color: var(--color-text-dark);
+}
+
 .input-checkbox {
    margin-right: 10px;
+   cursor: pointer;
+   width: 18px;
+   height: 18px;
+}
+
+.input-checkbox:checked {
+  background-color: green;
 }
 
 .inner-wrapper-top {
-  padding: 20px 30px;
-  border: 1px solid black;
-  min-height: 50vh;
-  max-height: 50vh;
-  overflow: auto;
-  /* background: var(--bgcolor-gradient); */
+  padding: 15px 30px;
+  /* border: 1px solid black; */
+  min-height: 40vh;
+  max-height: 40vh;
+  /* overflow: hidden; */
+  background: var(--bgcolor-gradient);
 }
 
 .inner-wrapper-middle {
   padding: 20px 30px;
   border: 1px solid black;
-  min-height: 40vh;
-  max-height: 40vh;
+  min-height: 52vh;
+  max-height: 52vh;
   overflow: auto;
   /* background: var(--bgcolor-gradient); */
 }
@@ -112,16 +119,18 @@ textarea {
   /* padding: 40px 30px; */
   border: 1px solid black;
   height: 5vh;
-  /* background: var(--bgcolor-gradient); */
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  background: var(--bgcolor-gradient);
 }
 
-
 .options-wrapper {
-   border: 1px solid green;
+   /* border: 1px solid green; */
 }
 
 .options-inner {
-   border: 1px solid pink;
+   /* border: 1px solid pink; */
    margin: 5px;
 }
 
@@ -138,54 +147,83 @@ textarea {
   background-color: var(--bgcolor-textarea);
   color: var(--color-text-dark);
   border-radius: 5px;
+  cursor: pointer;
 }
 
-.options-line label {
-   font-family: 'Poppins sans-serif';
+.label-bright {
    font-size: 2.5vh;
-   display:flex;
+   display: flex;
    justify-content: left;
    align-items: center;
-   padding-left: 25%;
+   padding-left: 10%;
    color: var(--color-text-dark);
    font-weight: 600;
+   cursor: pointer;
+   letter-spacing: .1em;
+}
+
+.pale {
+  color: var(--color-text-pale)
 }
 
 .ready-snippets-wrapper {
-  border: 3px solid green;
   min-height: 40vh;
   max-height: 40vh;
+  border: 2px solid var(--color-text-dark);
+  border-radius: 5px;
   overflow: auto;
+  /* background-color: var(--bgcolor-textarea); */
 }
 
-.snippet {
-  text-align: left;
-}
 
 .title-wrapper {
   /* border: 1px solid palevioletred; */
   padding:0;
-  /* background: var(--bgcolor-gradient) */
+  /* background: var(--bgcolor-gradient); */
+  /* background-color: var(--bgcolor-darker); */
+  text-align: left;
+  border-radius: 5px;
 }
 
 .title {
-  font-size: 34px;
-  font-weight: 700;
+  font-size: 40px;
+  font-weight: 500;
   font-family: 'Kanit', sans-serif;
   color: var(--color-text-title);
+  margin-left: 10px;
 }
 
 .textarea-wrapper {
-  border: 1px solid orange;
-  padding: 5px;
+  /* border: 1px solid orange; */
+  /* padding: 5px; */
+}
+
+.textarea-input {
+  display: block;
+  width: 100%;
+  height: 95%;
+  resize: none;
+  margin-bottom: 20px;
+  line-height: 46px;
+  transition: all .3s ease;
+  /* min-height: 20vh;
+  max-height: 25vh; */
+  font-size: 2.5vh;
+  letter-spacing: .1px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  outline:none;
+  background-color: var(--bgcolor-textarea);
+  border: 2px solid var(--color-text-dark);
+  color:var(--color-text-dark);
 }
 
 .workzone {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .workzone-inner-wrapper {
-  border: 1px dotted lightblue;
+  /* border: 1px dotted lightblue; */
 }
 
 
