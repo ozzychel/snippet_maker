@@ -101,66 +101,67 @@ class App extends React.Component<Props, State> {
           </div>
 
           <div className="container-fluid p-2 workzone">
-            <div className="row">
-              <div className="col-9 textarea-wrapper">
+            <div className="row workzone-inner-wrapper">
+              <div className="col-12 col-lg-9 textarea-wrapper">
                 <textarea className="textarea-input" onChange={this.handleOnChange} value={this.state.userInput}/>
               </div>
-              <div className="col-3 options-wrapper">
+              <div className="col-12 col-lg-3 options-wrapper">
                 <div className="options-inner">
-                <div className="options-line">
-                  <select
-                    value={this.state.outStyle}
-                    onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
-                      this.setState({ outStyle: e.currentTarget.value})
-                    }}
-                  >
-                    {styleOptions}
-                  </select>
-                </div>
+                  <div className="row">
+                    <div className="col-6 options-line">
+                      <select
+                        value={this.state.outStyle}
+                        onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
+                          this.setState({ outStyle: e.currentTarget.value})
+                        }}
+                      >
+                        {styleOptions}
+                      </select>
+                    </div>
+                    <div className="col-6 options-line">
+                      <select
+                        value={this.state.outLang}
+                        onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
+                          this.setState({ outLang: e.currentTarget.value})
+                        }}
+                      >
+                        {langOptions}
+                      </select>
+                    </div>
+                  </div>
 
-                <div className="options-line mt-2">
-                  <select
-                    value={this.state.outLang}
-                    onChange={(e:React.ChangeEvent<HTMLSelectElement>,):void => {
-                      this.setState({ outLang: e.currentTarget.value})
-                    }}
-                  >
-                    {langOptions}
-                  </select>
-                </div>
+                  <div className="mt-2">
+                    <label className={this.state.lineNums ? "label-bright" : "label-bright pale"}>
+                      <input
+                        className="input-checkbox"
+                        type="checkbox"
+                        checked={this.state.lineNums}
+                        onChange={() => this.setState({ lineNums: !this.state.lineNums })}>
+                      </input>
+                      Show line numbers
+                    </label>
+                  </div>
 
-                <div className="options-line mt-2">
-                  <label className={this.state.lineNums ? "label-bright" : "label-bright pale"}>
-                    <input
-                      className="input-checkbox"
-                      type="checkbox"
-                      checked={this.state.lineNums}
-                      onChange={() => this.setState({ lineNums: !this.state.lineNums })}>
-                    </input>
-                    Show line numbers
-                  </label>
-                </div>
+                  <div className="mt-2">
+                    <label className={this.state.wrapLines ? "label-bright" : "label-bright pale"}>
+                      <input
+                        className="input-checkbox"
+                        type="checkbox"
+                        checked={this.state.wrapLines}
+                        onChange={() => this.setState({ wrapLines: !this.state.wrapLines })}>
+                      </input>
+                      Wrap long lines
+                    </label>
+                  </div>
 
-                <div className="options-line mt-2">
-                  <label className={this.state.wrapLines ? "label-bright" : "label-bright pale"}>
-                    <input
-                      className="input-checkbox"
-                      type="checkbox"
-                      checked={this.state.wrapLines}
-                      onChange={() => this.setState({ wrapLines: !this.state.wrapLines })}>
-                    </input>
-                    Wrap long lines
-                  </label>
-                </div>
-
-                <div className="options-line py-2 mt-2">
-                  <button
-                    className="btn-submit"
-                    test-id="btn-submit"
-                    type="submit"
-                    onClick={this.handleButtonClick}
-                  >CREATE</button>
-                </div>
+                  <div className="options-line py-2 mt-2">
+                    <button
+                      className="btn-submit"
+                      test-id="btn-submit"
+                      type="submit"
+                      onClick={this.handleButtonClick}
+                    >CREATE</button>
+                  </div>
                 </div>
               </div>
 
@@ -170,17 +171,12 @@ class App extends React.Component<Props, State> {
 
         <div className="container-fluid my-2 inner-wrapper-middle bg-lighter">
           <div className="container-fluid title-wrapper">
-            {/* <div className="title">Ready Snippets:</div> */}
             <h3>Your snippets:</h3>
           </div>
           <div className="ready-snippets-wrapper">
-            {/* <ul>
-              {readySnippets}
-            </ul> */}
             <div>
               {readySnippets}
             </div>
-
           </div>
         </div>
 
@@ -189,7 +185,6 @@ class App extends React.Component<Props, State> {
         </div>
 
       </div>
-
     )
   }
 }
