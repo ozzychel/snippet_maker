@@ -167,6 +167,87 @@ ul {
 }
 
 
+.snippet-cont {
+  border:1px solid red;
+  width:100%;
+  display:flex;
+  flex-direction: row;
+}
+
+.snippet-inner {
+  border: 1px solid green;
+  width: 95%;
+}
+
+.snippet-tools-cont {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid blue;
+  width: 5%;
+}
+
+
+
+
+
+
+/* .snippet-outer {
+  border: 1px solid red;
+} */
+
+/* .snippet-tools-cont {
+  border: 2px solid green;
+  color: white;
+  width: 80%;
+  z-index: 100;
+
+
+  position: absolute;
+
+} */
+
+/* .snippet-outer:hover .snippet-tools-cont {
+  bottom: -20px;
+  transition: .3s ease all;
+} */
+
+/* .project-content {
+  position: absolute;
+  bottom: -92px;
+  width: 100%;
+  padding: 50px 35px;
+  z-index: 13;
+  transition: .3s ease all;
+
+  color: white;
+} */
+
+/* .project-content:before {
+  position: absolute;
+  content: "";
+  background: linear-gradient(180deg,transparent 0,var(--color-black) 70%);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  z-index: -1;
+  cursor: pointer;
+} */
+
+/* .snippet-outer:hover .project-content {
+  visibility: visible;
+  bottom: -20px;
+  transition: .3s ease all;
+} */
+
+
+
+
+
+
+
+
 .title-wrapper {
   padding:0;
   text-align: left;

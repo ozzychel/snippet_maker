@@ -9,86 +9,132 @@ const supportedLanguages = getLangs(SyntaxHighlighter);
 
 type Props = {}
 type State = {
-  counter: number,
   userInput: string,
   snippets: snipObj[],
   outStyle: string,
   outLang: string,
   lineNums: boolean,
-  wrapLines: boolean
+  wrapLines: boolean,
+  styleNames: string[],
+  styleInd: any
 };
 
 type snipObj = {
   txt: string,
-  style: string,
+  style: undefined | string,
   lang: string,
   lineNums: boolean,
   wrapLines: boolean
 }
 
+enum snipObjKey {
+  txt = "txt",
+  lang = "lang",
+  style = "style",
+  lineNums = "lineNums",
+  wrapLines = "wrapLines"
+}
+
 class App extends React.Component<Props, State> {
   state = {
-    counter: 0,
     userInput: "",
     snippets: [],
     outStyle: "monokaiSublime",
     outLang: "javascript",
     lineNums: true,
-    wrapLines: true
+    wrapLines: true,
+    styleNames: Object.keys(style),
+    styleInd: new Map()
   };
+
+  componentDidMount () {
+    const styleHash = new Map();
+    for(let i = 0; i < this.state.styleNames.length; i++) {
+      styleHash.set(this.state.styleNames[i], i);
+    }
+    this.setState({ styleInd: styleHash})
+  }
 
   handleOnChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     this.setState({ userInput: e.currentTarget.value })
   }
 
-  handleButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  handleCreateButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     if(this.state.userInput) {
-      this.addSnippet(this.state.userInput)
-      this.setState({userInput:""})
+      this.addSnippet(this.state.userInput);
+      this.setState({userInput:""});
     }
   }
 
   addSnippet = (txt: string) => {
-    let res = jsbeautifier(txt);
+    const res = jsbeautifier(txt);
     this.setState({ snippets: [...this.state.snippets,
       {txt: res, style: this.state.outStyle, lang: this.state.outLang, lineNums: this.state.lineNums, wrapLines: this.state.wrapLines}
     ]});
+  };
+
+  switchStyle = (ind: number, dir: string): void => {
+
+    const current: snipObj = this.state.snippets[ind];
+    const currentStyle: string | undefined = current[snipObjKey.style];
+    const currentStyleIndex: number = this.state.styleInd.get(currentStyle);
+
+    const getStyle = (dir: string, index: number) => {
+      if (index === 0 && dir === 'left') index = this.state.styleNames.length - 1;
+      if (index === this.state.styleNames.length - 1 && dir === 'right') index = 0;
+      if (dir === 'left') return this.state.styleNames[index - 1];
+      if (dir === 'right') return this.state.styleNames[index + 1];
+    }
+
+    const newSnipArr: snipObj[] = this.state.snippets.slice();
+
+    const newSnip: snipObj = {
+      txt: current[snipObjKey.txt],
+      lang: current[snipObjKey.lang],
+      lineNums: current[snipObjKey.lineNums],
+      wrapLines: current[snipObjKey.wrapLines],
+      style: getStyle(dir, currentStyleIndex)
+    }
+    newSnipArr[ind] = newSnip;
+    this.setState({ snippets: newSnipArr });
+  }
+
+  handleArrowButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    const splitted: string[] = e.currentTarget.value.split(' ')
+    this.switchStyle(parseInt(splitted[0]), splitted[1]);
   }
 
   render () {
-
-    const styleNames: string[] = Object.keys(style);
-    const styleOptions: JSX.Element[] = styleNames.map((el:string, i:number) => (
+    const styleOptions: JSX.Element[] = this.state.styleNames.map((el:string, i:number) => (
       <option key={i} value={el}>{el}</option>
     ))
+
     const langOptions: JSX.Element[] = supportedLanguages.map((el:string, i:number) => (
       <option key={i} value={el}>{el}</option>
     ))
-    // const readySnippets: JSX.Element[] = this.state.snippets.map((el, i:number) => (
-    //   <li className="snippet" key={i}>
-    //     <SyntaxHighlighter
-    //       style={style[el['style']]}
-    //       language={el['lang']}
-    //       showLineNumbers={el['lineNums']}
-    //       wrapLongLines={el['wrapLines']}
-    //     >
-    //       {el['txt']}
-    //     </SyntaxHighlighter>
-    //   </li>
-    // ));
 
     const readySnippets: JSX.Element[] = this.state.snippets.map((el, i:number) => (
-      <div key={i}>
-        <SyntaxHighlighter
+
+      <div className="snippet-cont" key={i}>
+        <div className="snippet-inner">
+          <SyntaxHighlighter
           style={style[el['style']]}
           language={el['lang']}
           showLineNumbers={el['lineNums']}
           wrapLongLines={el['wrapLines']}
-        >
-          {el['txt']}
-        </SyntaxHighlighter>
+           >
+            {el['txt']}
+          </SyntaxHighlighter>
+        </div>
+        <div className="snippet-tools-cont">
+          <button onClick={this.handleArrowButtonClick} value={`${i} left`}>Left</button>
+          <button className="mt-2" onClick={this.handleArrowButtonClick} value={`${i} right`}>Right</button>
+          <button className="mt-2">Down</button>
+        </div>
       </div>
+
     ));
 
     return (
@@ -159,7 +205,7 @@ class App extends React.Component<Props, State> {
                       className="btn-submit"
                       test-id="btn-submit"
                       type="submit"
-                      onClick={this.handleButtonClick}
+                      onClick={this.handleCreateButtonClick}
                     >CREATE</button>
                   </div>
                 </div>
